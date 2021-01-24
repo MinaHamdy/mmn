@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>optimization &mdash; Neural Project 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+     
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Neural Project
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../User guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dataset.html">dataset module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../init.html">init module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers.html">layers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../activations.html">activations module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../forward_prop.html">forward_prop module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../forward_model.html">forward_model module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Losses.html">Losses module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../back_prop.html">back_prop module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backward_model.html">backward_model module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization.html">optimization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Batch.html">Batch module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mini_batch.html">Mini_batch module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Metric.html">Metric module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Neural Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>optimization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for optimization</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="viewcode-block" id="momentum"><a class="viewcode-back" href="../optimization.html#optimization.momentum">[docs]</a><span class="k">class</span> <span class="nc">momentum</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &quot; The class concerned The momentum optimization &quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param parameters: the Weights and biases of The current model</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span>
+
+
+<div class="viewcode-block" id="momentum.velocity_preparation"><a class="viewcode-back" href="../optimization.html#optimization.momentum.velocity_preparation">[docs]</a>    <span class="k">def</span> <span class="nf">velocity_preparation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :return: Velocity parameter for weights and biases as to update the parameters using momentum GD</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># number of layers in the neural networks</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Initialize velocity</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">weights</span><span class="p">):</span>
+            <span class="n">v</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">v</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">v</span></div>
+
+
+<div class="viewcode-block" id="momentum.update_with_momentum"><a class="viewcode-back" href="../optimization.html#optimization.momentum.update_with_momentum">[docs]</a>    <span class="k">def</span> <span class="nf">update_with_momentum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">velocity</span><span class="p">,</span><span class="n">learning_rate</span><span class="p">,</span><span class="n">exponentially_weighted_average_parameter</span><span class="p">,</span><span class="n">gradients</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param velocity: Velocity of the gradient with momentum</span>
+<span class="sd">        :param learning_rate: the learning rate</span>
+<span class="sd">        :param exponentially_weighted_average_parameter: Beta , the momentum hyperparameter</span>
+<span class="sd">        :param gradients: dW , dB , the gradients of the weights and biases of each layer</span>
+<span class="sd">        :return: parameters: updated weights and biases</span>
+<span class="sd">                 velocity : updated velocity to be used in the next iteration</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># number of layers in the neural networks</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="c1"># compute velocities</span>
+             <span class="n">velocity</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">exponentially_weighted_average_parameter</span> <span class="o">*</span> <span class="n">velocity</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exponentially_weighted_average_parameter</span><span class="p">)</span> <span class="o">*</span>  <span class="n">gradients</span><span class="p">[</span><span class="s1">&#39;dW&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+             <span class="n">velocity</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">exponentially_weighted_average_parameter</span> <span class="o">*</span>  <span class="n">velocity</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exponentially_weighted_average_parameter</span><span class="p">)</span> <span class="o">*</span> <span class="n">gradients</span><span class="p">[</span><span class="s1">&#39;db&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="c1"># update parameters</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">-</span>  <span class="n">learning_rate</span> <span class="o">*</span>  <span class="n">velocity</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">-</span>  <span class="n">learning_rate</span> <span class="o">*</span>  <span class="n">velocity</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">velocity</span></div></div>
+
+
+
+
+<div class="viewcode-block" id="ADAM"><a class="viewcode-back" href="../optimization.html#optimization.ADAM">[docs]</a><span class="k">class</span> <span class="nc">ADAM</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &quot; The class concerned ADAM optimization technique &quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param parameters: The weights and biases for each layer before any updates</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span>
+
+
+<div class="viewcode-block" id="ADAM.adam_preparation"><a class="viewcode-back" href="../optimization.html#optimization.ADAM.adam_preparation">[docs]</a>    <span class="k">def</span> <span class="nf">adam_preparation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        &quot; Initialization of ADAM optimization&#39;s parameters&quot;</span>
+<span class="sd">        :return: EWA : exponentially weighted average parameter</span>
+<span class="sd">                 RMS : Root mean square prop parameter</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># number of layers in the neural networks</span>
+        <span class="n">EWA</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">RMS</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Initialize v, s. Input: &quot;parameters&quot;. Outputs: &quot;v, s&quot;.</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="c1"># exponentially weighted average parameters</span>
+            <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="c1"># RMS prop average parameters</span>
+            <span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">EWA</span><span class="p">,</span> <span class="n">RMS</span></div>
+
+<div class="viewcode-block" id="ADAM.update_with_adam"><a class="viewcode-back" href="../optimization.html#optimization.ADAM.update_with_adam">[docs]</a>    <span class="k">def</span> <span class="nf">update_with_adam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">EWA</span><span class="p">,</span><span class="n">RMS</span><span class="p">,</span><span class="n">learning_rate</span><span class="p">,</span><span class="n">parameters</span><span class="p">,</span><span class="n">gradients</span><span class="p">,</span><span class="n">epoch_num</span><span class="p">,</span><span class="n">frist_beta</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">second_beta</span><span class="o">=</span><span class="mf">0.995</span><span class="p">,</span><span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param EWA: Exponentially weighted average parameter</span>
+<span class="sd">        :param RMS: RMS prop parameter</span>
+<span class="sd">        :param learning_rate: the learning rate</span>
+<span class="sd">        :param parameters: weights and biases before update</span>
+<span class="sd">        :param gradients: the Gradients of weights and biases for the current model&#39;s layers</span>
+<span class="sd">        :param epoch_num: the Epoch number</span>
+<span class="sd">        :param frist_beta: Beta_1 , the first hyperparameter for Exponentially weighted average&#39;s parameter</span>
+<span class="sd">        :param second_beta:Beta_2 , the 2nd hyperparameter for RMS prop&#39;s parameter</span>
+<span class="sd">        :param epsilon: The safety margin as to not divide by zero</span>
+<span class="sd">        :return: :param parameters : The updated parameters of the current model</span>
+<span class="sd">                 :param: EWA : the updated Exponentially weighted average parameters</span>
+<span class="sd">                 :param RMS : the updated RMS prop parameters</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># number of layers in the neural networks</span>
+        <span class="n">EWA_corrected</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Initializing first moment estimate, python dictionary</span>
+        <span class="n">RMS_corrected</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Initializing second moment estimate, python dictionary</span>
+
+        <span class="c1"># Perform Adam update on all parameters</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+
+            <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">frist_beta</span> <span class="o">*</span> <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">frist_beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">gradients</span><span class="p">[</span><span class="s1">&#39;dW&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">frist_beta</span> <span class="o">*</span> <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">frist_beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">gradients</span><span class="p">[</span><span class="s1">&#39;db&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="c1">#EWA_corrected[&quot;dW&quot; + str(l + 1)] = EWA[&quot;dW&quot; + str(l + 1)] / ((1 - frist_beta ** epoch_num)+epsilon)</span>
+            <span class="c1">#EWA_corrected[&quot;db&quot; + str(l + 1)] = EWA[&quot;db&quot; + str(l + 1)] / ((1 - frist_beta ** epoch_num)+epsilon)</span>
+            <span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">second_beta</span> <span class="o">*</span> <span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">second_beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">gradients</span><span class="p">[</span><span class="s1">&#39;dW&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+            <span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">second_beta</span> <span class="o">*</span> <span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">second_beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">gradients</span><span class="p">[</span><span class="s1">&#39;db&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+            <span class="c1">#RMS_corrected[&quot;dW&quot; + str(l + 1)] = RMS[&quot;dW&quot; + str(l + 1)] / ((1 - second_beta ** epoch_num)+epsilon)</span>
+            <span class="c1">#RMS_corrected[&quot;db&quot; + str(l + 1)] = RMS[&quot;db&quot; + str(l + 1)] / ((1 - second_beta ** epoch_num)+epsilon)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;W&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;dW&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">EWA</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">RMS</span><span class="p">[</span><span class="s2">&quot;db&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">)</span>
+
+
+        <span class="k">return</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">EWA</span><span class="p">,</span><span class="n">RMS</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Group16.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

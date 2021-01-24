@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>forward_model &mdash; Neural Project 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+     
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Neural Project
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../User guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dataset.html">dataset module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../init.html">init module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers.html">layers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../activations.html">activations module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../forward_prop.html">forward_prop module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../forward_model.html">forward_model module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Losses.html">Losses module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../back_prop.html">back_prop module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backward_model.html">backward_model module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization.html">optimization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Batch.html">Batch module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mini_batch.html">Mini_batch module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Metric.html">Metric module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Neural Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>forward_model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for forward_model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">layers</span> <span class="kn">import</span> <span class="n">layers</span>
+<span class="kn">from</span> <span class="nn">forward_prop</span> <span class="kn">import</span> <span class="n">forward_prop</span>
+<div class="viewcode-block" id="forward_model"><a class="viewcode-back" href="../forward_model.html#forward_model.forward_model">[docs]</a><span class="k">class</span> <span class="nc">forward_model</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &quot; Class of Applying Forward propagation process . &quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="forward_model.forward_model"><a class="viewcode-back" href="../forward_model.html#forward_model.forward_model.forward_model">[docs]</a>    <span class="k">def</span> <span class="nf">forward_model</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param X: The input to the current layer as to start the forward propagation process</span>
+<span class="sd">        :param parameters: Weights and biases of the current layer</span>
+<span class="sd">        :return : - Y_hat ( predictions resulted from the current layer&#39;s forward propagation )</span>
+<span class="sd">                  - packet of packets : Tuple of 2 elements which will be used in backward propagation :</span>
+<span class="sd">                     1- linear packer : contains ( input , weights , biases ) of the current layer</span>
+<span class="sd">                     2- activation packet : contains ( Z ) which is the input to the activation function</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">packet_of_packets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">X</span> <span class="c1"># as for the first time A will equal to the input layer</span>
+        <span class="c1">#print(type(parameters))</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># number of layers in the neural network</span>
+        <span class="c1">#print(L)</span>
+        <span class="n">test_forward</span><span class="o">=</span><span class="n">forward_prop</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+            <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span>
+            <span class="n">A</span><span class="p">,</span> <span class="n">packet</span> <span class="o">=</span> <span class="n">test_forward</span><span class="o">.</span><span class="n">activation_forward</span><span class="p">(</span><span class="n">A_prev</span><span class="p">,</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;W&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)],</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;b&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)],</span> <span class="n">activation_type</span><span class="o">=</span><span class="s2">&quot;sigmoid&quot;</span><span class="p">)</span>
+            <span class="n">packet_of_packets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+
+        <span class="n">prediction</span><span class="p">,</span> <span class="n">packet</span> <span class="o">=</span> <span class="n">test_forward</span><span class="o">.</span><span class="n">activation_forward</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;W&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">L</span><span class="p">)],</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;b&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">L</span><span class="p">)],</span> <span class="n">activation_type</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
+        <span class="n">packet_of_packets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+
+
+
+        <span class="k">return</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">packet_of_packets</span></div></div>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">dimensions = [3,5,1]</span>
+<span class="sd">test_model=forward_model(dimensions)</span>
+<span class="sd">AL , caches = test_model.forward_model([1,5,4])</span>
+<span class="sd">print(AL)</span>
+<span class="sd">print(&quot;###########################&quot;)</span>
+<span class="sd">print(caches)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Group16.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
